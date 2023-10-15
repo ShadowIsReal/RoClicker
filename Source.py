@@ -4,6 +4,8 @@ import pydirectinput
 import time
 from ctypes import windll, create_unicode_buffer
 
+print("Made by shadowisreal\n")
+
 AutoKeybind = input("Please enter a key to press to enable/disable the autoclicker: ")
 ExitKeybund = input("Please enter a key to press to stop the program (shutdown the program incase of emergency): ")
 
@@ -24,11 +26,11 @@ def GetWindowTitle():
     
     return False
 
-def ChangeState():
+def ChangeState(self):
     global State
     State = not State
 
-keyboard.add_hotkey(AutoKeybind, ChangeState)
+keyboard.on_press_key(AutoKeybind, ChangeState)
 
 while True:
     if not GetWindowTitle() == "Roblox":
