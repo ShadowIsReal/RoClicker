@@ -2,7 +2,6 @@ import keyboard
 import os
 import pydirectinput
 import time
-from pathlib import Path
 from ctypes import windll, create_unicode_buffer
 
 print("Made by shadowisreal\n")
@@ -11,12 +10,10 @@ AutoKeybind = False
 ExitKeybind = False
 
 print("Checking for previous config...")
-RoClickerPath = Path("C:/Users/"+os.getlogin()+"/.RoClicker")
-Config = Path("C:/Users/"+os.getlogin()+"/.RoClicker/config.txt")
 
-if Config.is_file():
+if os.path.exists("C:/Users/"+os.getlogin()+"/.RoClicker/config.txt"):
     print("Config Found!")
-    Keybinds = Config.read_text().replace("\n", " ").split(" ")
+    Keybinds = open("C:/Users/"+os.getlogin()+"/.RoClicker/config.txt", "r").read().replace("\n", " ").split(" ")
     AutoKeybind = Keybinds[1]
     ExitKeybind = Keybinds[3]
     print("Config Loaded: \n\nAutoclickerKeybind: "+AutoKeybind+"\nEmergencyExitKeybind: "+ExitKeybind)
@@ -31,20 +28,20 @@ if not AutoKeybind:
 
     ConfigString = "AutoclickerKeybind: "+AutoKeybind+"\nEmergencyExitKeybind: "+ExitKeybind
 
-    if RoClickerPath.exists():
+    if os.path.exists("C:/Users/"+os.getlogin()+"/.RoClicker"):
         ConfigFile = os.path.join("C:/Users/"+os.getlogin()+"/.RoClicker", "config.txt")
         ConfigFile = open(ConfigFile, "w")
         ConfigFile.write(ConfigString)
         ConfigFile.close()
     else:
-        RoClickerPath.mkdir()
+        os.system("cd C:/Users/"+os.getlogin()+"/ && mkdir .RoClicker")
         ConfigFile = os.path.join("C:/Users/"+os.getlogin()+"/.RoClicker", "config.txt")
         ConfigFile = open(ConfigFile, "w")
         ConfigFile.write(ConfigString)
         ConfigFile.close()
 
     print("Config Saved, RoClicker is working!")
-    
+
 keyboard.on_press_key(ExitKeybind, lambda _:os._exit(0))
 time.sleep(2)
 
